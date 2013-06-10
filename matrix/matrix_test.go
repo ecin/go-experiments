@@ -4,6 +4,36 @@ import (
   "testing"
 )
 
+func TestSetGet(t *testing.T) {
+  m := new(Matrix)
+
+  var examples = []struct {
+    x float64
+    y float64
+    value float64
+  }{
+    {0, 0, 0},
+    {1, 1, 1},
+    {2, 1, 1},
+    {64, 64, -1},
+    {1024, 1024, 0},
+    {3, 3, 3},
+  }
+
+  for _, example := range examples {
+    m.Set(example.x, example.y, example.value)
+
+    var value = m.Get(example.x, example.y)
+    if (value != example.value) {
+      t.Error("Expected value at (%d, %d) to be %d, was %d",
+        example.x,
+        example.y,
+        example.value,
+        value)
+    }
+  }
+}
+
 func TestIsZero(t *testing.T) {
   m := new(matrix)
 

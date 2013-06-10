@@ -35,50 +35,49 @@ func TestSetGet(t *testing.T) {
 }
 
 func TestIsZero(t *testing.T) {
-  m := new(matrix)
+  m := new(Matrix)
 
   if (!m.isZero()) {
-    t.Error("A new matrix should be zero")
+    t.Error("A new Matrix should be zero")
   }
 
   m.value = 5
 
   if (m.isZero()) {
-    t.Error("A matrix with a value shouldn't be zero")
+    t.Error("A Matrix with a value shouldn't be zero")
   }
 
-  m = new(matrix)
-  m2 := new(matrix)
+  m = new(Matrix)
+  m2 := new(Matrix)
   m.quadrants[0] = m2
 
   if (!m.isZero()) {
-    t.Error("A matrix with a zero quadrant should be zero")
+    t.Error("A Matrix with a zero quadrant should be zero")
   }
 
   m2.value = 1
   if (m.isZero()) {
-    t.Error("A matrix with a non-zero quadrant shouldn't be zero")
+    t.Error("A Matrix with a non-zero quadrant shouldn't be zero")
   }
 }
 
 func TestIsScalar(t *testing.T) {
-  m := new(matrix)
+  m := new(Matrix)
 
   if (!m.isScalar()) {
-    t.Error("A new matrix should be a scalar")
+    t.Error("A new Matrix should be a scalar")
   }
 
-  m.quadrants[0] = new(matrix)
+  m.quadrants[0] = new(Matrix)
 
   if (m.isScalar()) {
-    t.Error("A matrix with a quadrant shouldn't be a scalar")
+    t.Error("A Matrix with a quadrant shouldn't be a scalar")
   }
-
 }
 
 func Testequals(t *testing.T) {
-  m := new(matrix)
-  n := new(matrix)
+  m := new(Matrix)
+  n := new(Matrix)
 
   if (!m.equals(n)) {
     t.Error("Two new matrices should be equal")
@@ -96,14 +95,14 @@ func Testequals(t *testing.T) {
     t.Error("Matrices with equal values (and empty quadrants) should be equal")
   }
 
-  o := new(matrix)
-  p := new(matrix)
+  o := new(Matrix)
+  p := new(Matrix)
   for i, _ := range o.quadrants {
-    o.quadrants[i] = new(matrix)
-    o.quadrants[i].value = i
+    o.quadrants[i] = new(Matrix)
+    o.quadrants[i].value = float64(i)
 
-    p.quadrants[i] = new(matrix)
-    p.quadrants[i].value = i
+    p.quadrants[i] = new(Matrix)
+    p.quadrants[i].value = float64(i)
   }
 
   if (!o.equals(p)) {
@@ -119,8 +118,8 @@ func Testequals(t *testing.T) {
 }
 
 func TestPlus(t *testing.T) {
-  m := new(matrix)
-  n := new(matrix)
+  m := new(Matrix)
+  n := new(Matrix)
 
   o := m.plus(n)
 
@@ -129,11 +128,11 @@ func TestPlus(t *testing.T) {
   }
 
   for i, _ := range m.quadrants {
-    m.quadrants[i] = new(matrix)
-    m.quadrants[i].value = i
+    m.quadrants[i] = new(Matrix)
+    m.quadrants[i].value = float64(i)
 
-    n.quadrants[i] = new(matrix)
-    n.quadrants[i].value = i
+    n.quadrants[i] = new(Matrix)
+    n.quadrants[i].value = float64(i)
   }
 
   o = m.plus(n)
@@ -144,7 +143,7 @@ func TestPlus(t *testing.T) {
 
 
   for i, quadrant := range o.quadrants {
-    if (quadrant.value != i + i) {
+    if (quadrant.value != float64(i + i)) {
       t.Error("The sum of two non-scalar matrices should add its quadrants")
     }
   }
@@ -152,8 +151,8 @@ func TestPlus(t *testing.T) {
 }
 
 func TestMultiply(t *testing.T) {
-  m := new(matrix)
-  n := new(matrix)
+  m := new(Matrix)
+  n := new(Matrix)
 
   m.value = 3
   n.value = 5
@@ -165,23 +164,23 @@ func TestMultiply(t *testing.T) {
   }
 
   for i, _ := range m.quadrants {
-    m.quadrants[i] = new(matrix)
+    m.quadrants[i] = new(Matrix)
     m.quadrants[i].value = 1
 
-    n.quadrants[i] = new(matrix)
+    n.quadrants[i] = new(Matrix)
     n.quadrants[i].value = 1
   }
 
   o = m.multiply(n)
-  p := new(matrix)
+  p := new(Matrix)
 
   for i, _ := range p.quadrants {
-    p.quadrants[i] = new(matrix)
+    p.quadrants[i] = new(Matrix)
     p.quadrants[i].value = 2
   }
 
   if (!o.equals(p)) {
-    t.Error("The product of two matrices full of ones should be a matrix full of twos")
+    t.Error("The product of two matrices full of ones should be a Matrix full of twos")
   }
 
 }
